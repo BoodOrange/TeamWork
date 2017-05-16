@@ -85,6 +85,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrowserHost.cs" />
+    <Compile Include="Pages\BasePage.cs" />
+    <Compile Include="Pages\ChangePasswordPage\ChangePasswordPage.cs" />
+    <Compile Include="Pages\ChangePasswordPage\ChangePasswordPageAsserter.cs" />
+    <Compile Include="Pages\ChangePasswordPage\ChangePasswordPageMap.cs" />
+    <Compile Include="Pages\CreatePostPage\CreatePostPage.cs" />
+    <Compile Include="Pages\CreatePostPage\CreatePostPageAsserter.cs" />
+    <Compile Include="Pages\CreatePostPage\CreatePostPageMap.cs" />
+    <Compile Include="Pages\DeletePostPage\DeletePostPage.cs" />
+    <Compile Include="Pages\DeletePostPage\DeletePostPageAsserter.cs" />
+    <Compile Include="Pages\DeletePostPage\DeletePostPageMap.cs" />
+    <Compile Include="Pages\EditPostPage\EditPostPage.cs" />
+    <Compile Include="Pages\EditPostPage\EditPostPageAsserter.cs" />
+    <Compile Include="Pages\EditPostPage\EditPostPageMap.cs" />
+    <Compile Include="Pages\HomePage\HomePage.cs" />
+    <Compile Include="Pages\HomePage\HomePageAsserter.cs" />
+    <Compile Include="Pages\HomePage\HomePageMap.cs" />
+    <Compile Include="Pages\LogInPage\LogInPage.cs" />
+    <Compile Include="Pages\LogInPage\LogInPageAsserter.cs" />
+    <Compile Include="Pages\LogInPage\LogInPageMap.cs" />
+    <Compile Include="Pages\ManageAccountPage\ManageAccountPage.cs" />
+    <Compile Include="Pages\ManageAccountPage\ManageAccountPageAsserter.cs" />
+    <Compile Include="Pages\ManageAccountPage\ManageAccountPageMap.cs" />
+    <Compile Include="Pages\RegistrationPage\RegistrationPage.cs" />
+    <Compile Include="Pages\RegistrationPage\RegistrationPageAsserter.cs" />
+    <Compile Include="Pages\RegistrationPage\RegistrationPageMap.cs" />
     <Compile Include="UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -92,16 +117,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\ChangePasswordPage\" />
-    <Folder Include="Pages\CreatePostPage\" />
-    <Folder Include="Pages\DeletePostPage\" />
-    <Folder Include="Pages\EditPostPage\" />
-    <Folder Include="Pages\HomePage\" />
-    <Folder Include="Pages\LogInPage\" />
-    <Folder Include="Pages\ManageAccountPage\" />
-    <Folder Include="Pages\RegistrationPage\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>

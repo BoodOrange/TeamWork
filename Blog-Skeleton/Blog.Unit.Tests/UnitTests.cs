@@ -23,7 +23,6 @@ namespace Blog.Unit.Tests
 
             var logo = wait.Until(w => w.FindElement(By.XPath("/html/body/div[1]/div/div[1]/a")));
 
-            // TODO: Add your test code here
             Assert.AreEqual("SOFTUNI BLOG", logo.Text);
         }
     }

@@ -13,10 +13,11 @@ namespace Blog.Unit.Tests
     {
         public static readonly SelenoHost Instance = new SelenoHost();
         public static readonly string RootUrl = @"http://localhost:60634/Article/List"; 
-         static BrowserHost()
+
+        static BrowserHost()
         {
-            Instance.Run("Blog", 60634); // Runing for FireFox
-            //Instance.Run("Blog", 60634, w => w.WithRemoteWebDriver(() => new ChromeDriver())); // Runing for chrome 
+            //Instance.Run("Blog", 60634); // Runing for FireFox
+            Instance.Run("Blog", 60634, w => w.WithRemoteWebDriver(() => new ChromeDriver())); // Runing for chrome 
                                     
         }
     }

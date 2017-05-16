@@ -8,7 +8,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Blog.Unit.Tests.Pages
 {
-    class BasePage
+    public class BasePage
     {
         private IWebDriver driver;
         private WebDriverWait wait;
