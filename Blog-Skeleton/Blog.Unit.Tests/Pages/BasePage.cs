@@ -10,29 +10,14 @@ namespace Blog.Unit.Tests.Pages
 {
     public class BasePage
     {
-        private IWebDriver driver;
-        private WebDriverWait wait;
-
         public BasePage(IWebDriver driver)
         {
-            this.driver = driver;
-            this.wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(30));
+            this.Driver = driver;
+            this.Wait = new WebDriverWait(this.Driver, TimeSpan.FromSeconds(30));
         }
 
-        public IWebDriver Driver
-        {
-            get
-            {
-                return this.driver;
-            }
-        }
+        public IWebDriver Driver { get; }
 
-        public WebDriverWait Wait
-        {
-            get
-            {
-                return this.wait;
-            }
-        }
+        public WebDriverWait Wait { get; }
     }
 }

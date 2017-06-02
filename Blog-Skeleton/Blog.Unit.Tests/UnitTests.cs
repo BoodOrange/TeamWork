@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace Blog.Unit.Tests
 {
+    using Pages.HomePage;
+
     [TestFixture]
     public class UnitTests
     {
@@ -25,14 +27,14 @@ namespace Blog.Unit.Tests
         [Test]
         public void CheckSiteLoad()
         {
-            IWebDriver driver = BrowserHost.Instance.Application.Browser;
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
+            //Arrange
+            HomePage home = new HomePage(this.driver);
 
-            driver.Navigate().GoToUrl("http://localhost:60634/Article/List");
+            //Act
+            home.NavigateTo();
 
-            var logo = wait.Until(w => w.FindElement(By.XPath("/html/body/div[1]/div/div[1]/a")));
-
-            Assert.AreEqual("SOFTUNI BLOG", logo.Text);
+            //Assert
+            Assert.AreEqual("SOFTUNI BLOG", home.Logo.Text);
         }
 
         [Test]
