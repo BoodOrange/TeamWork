@@ -73,6 +73,7 @@ namespace Blog.Unit.Tests
                 page.FillAndSubmit("Testpassword_2", "Testpassword_1");
             }
 
+
             Assert.NotNull(status);
 
         }
