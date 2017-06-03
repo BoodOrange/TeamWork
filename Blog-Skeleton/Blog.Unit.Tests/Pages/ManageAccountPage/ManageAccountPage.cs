@@ -11,6 +11,7 @@ namespace Blog.Unit.Tests.Pages.ManageAccountPage
     {
         public ManageAccountPage(IWebDriver driver) : base(driver)
         {
+            this.PageUrl += "/Manage";
         }
     }
 }

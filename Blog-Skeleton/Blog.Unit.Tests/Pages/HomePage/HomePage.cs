@@ -11,6 +11,7 @@ namespace Blog.Unit.Tests.Pages.HomePage
     {
         public HomePage(IWebDriver driver) : base(driver)
         {
+
         }
     }
 }

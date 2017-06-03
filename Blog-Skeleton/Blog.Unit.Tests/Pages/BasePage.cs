@@ -8,31 +8,39 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Blog.Unit.Tests.Pages
 {
-    public class BasePage
+    public abstract partial class BasePage
     {
-        private IWebDriver driver;
-        private WebDriverWait wait;
+        public readonly string BaseUrl;
+        public string PageUrl;
+        public bool Logged;
 
-        public BasePage(IWebDriver driver)
+        protected BasePage(IWebDriver driver)
         {
-            this.driver = driver;
-            this.wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(30));
+            this.Driver = driver;
+            this.Wait = new WebDriverWait(this.Driver, TimeSpan.FromSeconds(30));
+            this.BaseUrl = "http://localhost:60634";
+            this.PageUrl = "";
+            this.Logged = false;
         }
 
-        public IWebDriver Driver
+        public void NavigateTo()
         {
-            get
-            {
-                return this.driver;
-            }
+            Driver.Navigate().GoToUrl(this.BaseUrl + this.PageUrl);
         }
 
-        public WebDriverWait Wait
+        public void Type(IWebElement element, string text)
         {
-            get
-            {
-                return this.wait;
-            }
+            element.Clear();
+            element.SendKeys(text);
         }
+
+        public void LogOff()
+        {
+            this.LinkLogOff.Click();
+        }
+
+        public IWebDriver Driver { get; }
+
+        public WebDriverWait Wait { get; }
     }
 }
