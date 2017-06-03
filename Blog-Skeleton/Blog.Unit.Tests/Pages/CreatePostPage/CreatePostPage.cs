@@ -9,23 +9,21 @@ namespace Blog.Unit.Tests.Pages.CreatePostPage
 {
     public partial class CreatePostPage : BasePage
     {
-        private string url_Create = "http://localhost:60634/Article/Create";
         public CreatePostPage(IWebDriver driver) : base(driver)
         {
+            this.PageUrl += "/Article/Create";
         }
 
-       public void NavigetTo()
+        public void Fill(string title, string content)
         {
-            this.Driver.Navigate().GoToUrl(this.url_Create);
+            this.Type(this.FieldTitle, title);
+            this.Type(this.FieldContent, content);
         }
-        public void LogIn()
-        {
 
-        }
-        private void Type(IWebElement element, string text)
+        public void FillAndSubmit(string title, string content)
         {
-            element.Clear();
-            element.SendKeys(text);
+            this.Fill(title,content);
+            this.ButtonCreateArticle.Click();
         }
     }
 }

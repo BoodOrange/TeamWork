@@ -11,50 +11,62 @@ using System.Threading.Tasks;
 
 namespace Blog.Unit.Tests
 {
+    using Pages.ChangePasswordPage;
     using Pages.HomePage;
+    using Utility;
 
     [TestFixture]
     public class UnitTests
     {
-        public IWebDriver driver;
+        public IWebDriver Driver;
 
 
         [SetUp]
         public void initiate()
         {
-            this.driver = BrowserHost.Instance.Application.Browser;
+            this.Driver = BrowserHost.Instance.Application.Browser;
         }
+
         [Test]
         public void CheckSiteLoad()
         {
             //Arrange
-            HomePage home = new HomePage(this.driver);
+            HomePage home = new HomePage(this.Driver);
 
             //Act
             home.NavigateTo();
 
             //Assert
-            Assert.AreEqual("SOFTUNI BLOG", home.Logo.Text);
+            Assert.AreEqual("SOFTUNI BLOG", home.LinkLogo.Text);
         }
 
         [Test]
         public void CreateArticlePageLoad()
         {
            
-            CreatePostPage createArticle = new CreatePostPage(this.driver);
+            CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            createArticle.NavigetTo();
-            createArticle.Create_logIn.Click();
-            createArticle.Create_logIn_Email.SendKeys("TestEmail_01@test.com");
-            createArticle.Create_logIn_Password.SendKeys("Testpassword_1");
-            createArticle.Create_logIn_LogInButton.Click();
-            createArticle.Create_CreateFromHome_Button.Click();
-            createArticle.Create_Title.SendKeys("TestTitle_01");
-            createArticle.Create_Content.SendKeys("Content for TestTitle_01");
-            createArticle.Create_CreateArticleButton.Click();
+            BlogTestUtilities.LogInGoTo(createArticle,"TestEmail_01@test.com", "Testpassword_1");
+            createArticle.FillAndSubmit("TestTitle_01", "Content for TestTitle_01");
            
-            Assert.AreEqual("TestTitle_01\r\nContent for TestTitle_01\r\n--author", createArticle.Articles[3].Text);
+            Assert.AreEqual("TestTitle_01\r\nContent for TestTitle_01\r\n--author", createArticle.Articles.Last().Text);
             
          }
+
+        [Test]
+        public void ChangePassword()
+        {
+
+            ChangePasswordPage page = new ChangePasswordPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_1");
+            page.FillAndSubmit("Testpassword_1", "Testpassword_2");
+            page.LogOff();
+            BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_2");
+
+            Assert.Equals("TestEmail_01@test.com",page.LinkManage.Text.Substring(6));
+
+
+        }
     }
 }
