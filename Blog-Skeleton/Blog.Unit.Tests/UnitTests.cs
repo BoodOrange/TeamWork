@@ -64,7 +64,14 @@ namespace Blog.Unit.Tests
             page.LogOff();
             BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_2");
 
-            Assert.Equals("TestEmail_01@test.com",page.LinkManage.Text.Substring(6));
+            var status = this.Driver.Manage().Cookies.GetCookieNamed(".AspNet.ApplicationCookie");
+
+            Assert.NotNull(status);
+
+            //set the password again (not breaking other tests)
+            page.NavigateTo();
+            page.FillAndSubmit("Testpassword_2", "Testpassword_1");
+
 
 
         }
