@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace Blog.Unit.Tests
 {
     using Pages.ChangePasswordPage;
+    using Pages.EditPostPage;
     using Pages.HomePage;
     using Utility;
 
@@ -97,6 +98,44 @@ namespace Blog.Unit.Tests
             createArticle.FillAndSubmit("TestTitle_01", "Content for TestTitle_01");
 
             createArticle.AsserterArticleExist("TestTitle_01");
+        }
+
+        [Test]
+        [Author("Kristin Krastev")]
+        public void EditPageLoad()
+        {
+            EditPostPage editArticle = new EditPostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(editArticle, "TestEmail_01@test.com", "Testpassword_1");
+            editArticle.GoToEditArticle("TestTitle_01");
+
+            editArticle.AsserterEditArticlePageLoad("Edit Article");
+            //editArticle.EditContentAndSubmit("New Content for TestTitle_01");
+
+        }
+        [Test]
+        [Author("Kristin Krastev")]
+        public void EditPageTitle()
+        {
+            EditPostPage editArticle = new EditPostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(editArticle, "TestEmail_01@test.com", "Testpassword_1");
+            editArticle.GoToEditArticle("TestTitle_01");
+            editArticle.EditTitleAndSubmit("NewTestTitle_01");
+
+            editArticle.AsserterArticleExist("NewTestTitle_01");
+        }
+        [Test]
+        [Author("Kristin Krastev")]
+        public void EditPageContent()
+        {
+            EditPostPage editArticle = new EditPostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(editArticle, "TestEmail_01@test.com", "Testpassword_1");
+            editArticle.GoToEditArticle("TestTitle_01");
+            editArticle.EditContentAndSubmit("New Content for TestTitle_01");
+
+            editArticle.AsserterArticleExist("NewTestTitle_01");
         }
         [Test]
         public void ChangePassword()
