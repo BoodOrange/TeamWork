@@ -25,5 +25,11 @@ namespace Blog.Unit.Tests.Pages.CreatePostPage
             this.Fill(title,content);
             this.ButtonCreateArticle.Click();
         }
+        
+        public void FillAndCancel(string title, string content)
+        {
+            this.Fill(title, content);
+            this.ButtonCancel.Click();
+        }
     }
 }

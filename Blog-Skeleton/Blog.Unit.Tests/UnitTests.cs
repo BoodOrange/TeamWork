@@ -41,18 +41,63 @@ namespace Blog.Unit.Tests
         }
 
         [Test]
+        [Author("Kristin Krastev")]
         public void CreateArticlePageLoad()
         {
-           
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
             BlogTestUtilities.LogInGoTo(createArticle,"TestEmail_01@test.com", "Testpassword_1");
-            createArticle.FillAndSubmit("TestTitle_01", "Content for TestTitle_01");
            
-            Assert.AreEqual("TestTitle_01\r\nContent for TestTitle_01\r\n--author", createArticle.Articles.Last().Text);
-            
+            createArticle.AsserterArticlePageLoad("Create Article"); 
          }
+        [Test]
+        [Author("Kristin Krastev")]
+        public void CreateArticleWithoutTitle()
+        {
+            CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
+            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            createArticle.FillAndSubmit(String.Empty, "Content for TestTitle_01");
+
+            createArticle.AsserterArticleError("The Title field is required.");
+
+        }
+
+        [Test]
+        [Author("Kristin Krastev")]
+        public void CreateArticleWithoutContent()
+        {
+            CreatePostPage createArticle = new CreatePostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            createArticle.FillAndSubmit("TestTitle_01", String.Empty);
+
+            createArticle.AsserterArticleError("The Content field is required.");
+        }
+
+        [Test]
+        [Author("Kristin Krastev")]
+        public void CreateArticleCancel()
+        {
+            CreatePostPage createArticle = new CreatePostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            createArticle.FillAndCancel("TestTitle_Cancel", "Content for TestTitle_01");
+
+            createArticle.AsserterArticleCancel("TestTitle_Cancel");
+        }
+
+        [Test]
+        [Author("Kristin Krastev")]
+        public void CreateArticleCreate()
+        {
+            CreatePostPage createArticle = new CreatePostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            createArticle.FillAndSubmit("TestTitle_01", "Content for TestTitle_01");
+
+            createArticle.AsserterArticleExist("TestTitle_01");
+        }
         [Test]
         public void ChangePassword()
         {
