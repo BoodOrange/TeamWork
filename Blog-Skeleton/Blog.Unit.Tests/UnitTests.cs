@@ -111,14 +111,51 @@ namespace Blog.Unit.Tests
 
             var status = this.Driver.Manage().Cookies.GetCookieNamed(".AspNet.ApplicationCookie");
 
+            // if changed set the password again (not breaking other tests)
+            if (status != null)
+            {
+                page.NavigateTo();
+                page.FillAndSubmit("Testpassword_2", "Testpassword_1");
+            }
+
+
             Assert.NotNull(status);
 
-            //set the password again (not breaking other tests)
-            page.NavigateTo();
-            page.FillAndSubmit("Testpassword_2", "Testpassword_1");
+        }
 
+        [Test]
+        public void ChangePasswordWeak()
+        {
 
+            ChangePasswordPage page = new ChangePasswordPage(this.Driver);
 
+            BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_1");
+            page.FillAndSubmit("Testpassword_1", "1");
+            page.LogOff();
+            BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "1");
+
+            var status = this.Driver.Manage().Cookies.GetCookieNamed(".AspNet.ApplicationCookie");
+
+            //if changed set the password again (not breaking other tests)
+            if (status != null)
+            {
+                page.NavigateTo();
+                page.FillAndSubmit("1", "Testpassword_1");
+            }
+
+            Assert.Null(status);
+        }
+
+        [Test]
+        public void ChangePasswordWrong()
+        {
+
+            ChangePasswordPage page = new ChangePasswordPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_1");
+            page.FillAllAndSubmit("Testpassword_1", "Testpassword_2", "Testpassword_3");
+            
+            Assert.AreEqual("The new password and confirmation password do not match.",page.AlertPasswordsDoNotMatch.Text);
         }
     }
 }

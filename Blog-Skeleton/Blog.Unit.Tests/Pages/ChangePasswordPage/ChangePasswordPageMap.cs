@@ -15,5 +15,8 @@
 
         public IWebElement ButtonChangePassword => this.Driver
             .FindElement(By.XPath("/html/body/div[2]/div/div/form/div[5]/div/input"));
+
+        public IWebElement AlertPasswordsDoNotMatch => this.Driver
+            .FindElement(By.XPath("/html/body/div[2]/div/div/form/div[1]/ul/li"));
     }
 }
