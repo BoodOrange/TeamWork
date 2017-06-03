@@ -99,7 +99,18 @@ namespace Blog.Unit.Tests
             }
 
             Assert.Null(status);
+        }
 
+        [Test]
+        public void ChangePasswordWrong()
+        {
+
+            ChangePasswordPage page = new ChangePasswordPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_1");
+            page.FillAllAndSubmit("Testpassword_1", "Testpassword_2", "Testpassword_3");
+            
+            Assert.AreEqual("The new password and confirmation password do not match.",page.AlertPasswordsDoNotMatch.Text);
         }
     }
 }
