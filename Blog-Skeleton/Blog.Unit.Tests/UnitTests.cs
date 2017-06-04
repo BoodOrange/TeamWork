@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Blog.Unit.Tests.Models;
 
 
 namespace Blog.Unit.Tests
@@ -19,6 +20,8 @@ namespace Blog.Unit.Tests
     public class UnitTests
     {
         public IWebDriver Driver;
+
+        public User testUser { get; set; } = new User("TestEmail_01@test.com", "Testpassword_1", "Testpassword_1");
 
 
         [SetUp]
