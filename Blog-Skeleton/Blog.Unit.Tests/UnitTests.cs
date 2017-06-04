@@ -25,6 +25,12 @@ namespace Blog.Unit.Tests
             password: "Testpassword_1", 
             newPassword: "Testpassword_1"
             );
+        public User TestUser2 { get; set; } = new User(
+            fullname: "Full Name",
+            email: "TestEmail_02@test.com",
+            password: "Testpassword_2",
+            newPassword: "Testpassword_2"
+            );
 
         public User ChangeUser { get; set; } = new User(
             fullname: "Full Name", 
@@ -167,7 +173,19 @@ namespace Blog.Unit.Tests
 
             editArticle.AsserterArticleExist("NewTestTitle_01");
         }
+        [Test]
+        [Author("Kristin Krastev")]
+        public void EditPageWithDifferentUser()
+        {
+            EditPostPage editArticle = new EditPostPage(this.Driver);
 
+            BlogTestUtilities.LogInGoTo(editArticle, TestUser2);
+            editArticle.GoToEditArticle("TestTitle_User1");
+           // editArticle.EditButton.Click();
+
+            editArticle.AsserterEditArticleEditWithDifferentUserError("HTTP Error 403.0 - Forbidden");
+
+        }
         [Test]
         [Author("Zlatyo Uzunov")]
         public void ChangePassword()
@@ -194,6 +212,7 @@ namespace Blog.Unit.Tests
             Assert.NotNull(status);
 
         }
+        
 
         [Test]
         [Author("Zlatyo Uzunov")]
@@ -241,7 +260,7 @@ namespace Blog.Unit.Tests
         }
 
         [Test]
-        [Property("Refistration Page Tests", 1)]
+        [Property("Registration Page Tests", 1)]
         [Author("ST")]
         public void RegistrateWithValidUserAndPass()
         {

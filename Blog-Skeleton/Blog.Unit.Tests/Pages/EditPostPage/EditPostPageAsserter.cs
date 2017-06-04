@@ -25,5 +25,10 @@ namespace Blog.Unit.Tests.Pages.EditPostPage
 
             }
         }
+
+        public static void AsserterEditArticleEditWithDifferentUserError(this EditPostPage page, string text)
+        {
+            Assert.IsTrue(page.ArticleError.Text.Contains(text));
+        }
     }
 }
