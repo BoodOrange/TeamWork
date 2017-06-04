@@ -8,5 +8,6 @@ namespace Blog.Unit.Tests.Pages.DeletePostPage
 {
     public partial class DeletePostPage
     {
+
     }
 }

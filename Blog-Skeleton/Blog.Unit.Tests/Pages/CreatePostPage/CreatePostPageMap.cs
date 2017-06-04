@@ -1,9 +1,6 @@
 ﻿using OpenQA.Selenium;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blog.Unit.Tests.Pages.CreatePostPage
 {
@@ -34,5 +31,9 @@ namespace Blog.Unit.Tests.Pages.CreatePostPage
         public List<IWebElement> Articles => this.Driver
             .FindElements(By.ClassName("col-sm-6"))
             .ToList();
+        public IWebElement CreateArticleError => this.Driver
+            .FindElement(
+                By.XPath("/html/body/div[2]/div/div/form/div[1]/ul/li")
+            );
     }
 }
