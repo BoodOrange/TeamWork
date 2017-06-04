@@ -3,6 +3,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
 using Blog.Unit.Tests.Models;
+using Blog.Unit.Tests.Pages.RegistrationPage;
 
 
 namespace Blog.Unit.Tests
@@ -237,6 +238,14 @@ namespace Blog.Unit.Tests
             page.FillAllAndSubmit(user);
             
             Assert.AreEqual("The new password and confirmation password do not match.",page.AlertPasswordsDoNotMatch.Text);
+        }
+
+        [Test]
+        [Property("Refistration Page Tests", 1)]
+        [Author("ST")]
+        public void RegistrateWithValidUserAndPass()
+        {
+            RegistrationPage page = new RegistrationPage(this.Driver);
         }
 
         [Test]
