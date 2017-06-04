@@ -3,6 +3,7 @@
     using Models;
     using OpenQA.Selenium;
     using Pages;
+    using Pages.CreatePostPage;
     using Pages.DeletePostPage;
     using Pages.HomePage;
     using Pages.LogInPage;
@@ -26,13 +27,21 @@
             page.PageUrl += id;
         }
 
-        public static bool CheckArticleExistsByTitle(BasePage page, string title)
+        public static bool CheckArticleExistsByTitle(BasePage page, Article article)
         {
             var homepage = new HomePage(page.Driver);
 
-            string id = homepage.GetArticleIdByTitle(title);
+            string id = homepage.GetArticleIdByTitle(article.Title);
 
             return id != "";
+        }
+
+        public static void CreateArticle(IWebDriver driver, User user, Article article)
+        {
+            var createPage = new CreatePostPage(driver);
+
+            LogInGoTo(createPage, user);
+            createPage.FillAndSubmit(article.Title,article.Content);
         }
     }
 }

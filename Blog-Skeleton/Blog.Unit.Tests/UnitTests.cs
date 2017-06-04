@@ -50,6 +50,11 @@ namespace Blog.Unit.Tests
             confirmPassword: "1"
         );
 
+        public Article TestArticle { get; set; } = new Article(
+            title: "Lorem ipsum dolor sit",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac pretium velit. Morbi laoreet mauris ac est congue, quis iaculis."
+            );
+
 
         [SetUp]
         public void initiate()
@@ -253,15 +258,16 @@ namespace Blog.Unit.Tests
         public void DeleteOwnArticle()
         {
             var user = this.TestUser;
+            var article = this.TestArticle;
 
-            DeletePostPage page = new DeletePostPage(this.Driver, user, "TestTitle_01");
+            BlogTestUtilities.CreateArticle(this.Driver, user, article);
 
+            DeletePostPage page = new DeletePostPage(this.Driver, user, article);
             page.NavigateTo();
-
             page.ButtonDelete.Click();
 
             Assert.IsFalse(
-                BlogTestUtilities.CheckArticleExistsByTitle(page, "TestTitle_01")
+                BlogTestUtilities.CheckArticleExistsByTitle(page, article)
                 );
 
             
