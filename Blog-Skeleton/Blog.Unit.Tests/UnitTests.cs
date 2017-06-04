@@ -13,6 +13,7 @@ using Blog.Unit.Tests.Models;
 namespace Blog.Unit.Tests
 {
     using Pages.ChangePasswordPage;
+    using Pages.EditPostPage;
     using Pages.HomePage;
     using Utility;
 
@@ -44,18 +45,101 @@ namespace Blog.Unit.Tests
         }
 
         [Test]
+        [Author("Kristin Krastev")]
         public void CreateArticlePageLoad()
         {
-           
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
             BlogTestUtilities.LogInGoTo(createArticle,"TestEmail_01@test.com", "Testpassword_1");
-            createArticle.FillAndSubmit("TestTitle_01", "Content for TestTitle_01");
            
-            Assert.AreEqual("TestTitle_01\r\nContent for TestTitle_01\r\n--author", createArticle.Articles.Last().Text);
-            
+            createArticle.AsserterArticlePageLoad("Create Article"); 
          }
+        [Test]
+        [Author("Kristin Krastev")]
+        public void CreateArticleWithoutTitle()
+        {
+            CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
+            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            createArticle.FillAndSubmit(String.Empty, "Content for TestTitle_01");
+
+            createArticle.AsserterArticleError("The Title field is required.");
+
+        }
+
+        [Test]
+        [Author("Kristin Krastev")]
+        public void CreateArticleWithoutContent()
+        {
+            CreatePostPage createArticle = new CreatePostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            createArticle.FillAndSubmit("TestTitle_01", String.Empty);
+
+            createArticle.AsserterArticleError("The Content field is required.");
+        }
+
+        [Test]
+        [Author("Kristin Krastev")]
+        public void CreateArticleCancel()
+        {
+            CreatePostPage createArticle = new CreatePostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            createArticle.FillAndCancel("TestTitle_Cancel", "Content for TestTitle_01");
+
+            createArticle.AsserterArticleCancel("TestTitle_Cancel");
+        }
+
+        [Test]
+        [Author("Kristin Krastev")]
+        public void CreateArticleCreate()
+        {
+            CreatePostPage createArticle = new CreatePostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            createArticle.FillAndSubmit("TestTitle_01", "Content for TestTitle_01");
+
+            createArticle.AsserterArticleExist("TestTitle_01");
+        }
+
+        [Test]
+        [Author("Kristin Krastev")]
+        public void EditPageLoad()
+        {
+            EditPostPage editArticle = new EditPostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(editArticle, "TestEmail_01@test.com", "Testpassword_1");
+            editArticle.GoToEditArticle("TestTitle_01");
+
+            editArticle.AsserterEditArticlePageLoad("Edit Article");
+            //editArticle.EditContentAndSubmit("New Content for TestTitle_01");
+
+        }
+        [Test]
+        [Author("Kristin Krastev")]
+        public void EditPageTitle()
+        {
+            EditPostPage editArticle = new EditPostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(editArticle, "TestEmail_01@test.com", "Testpassword_1");
+            editArticle.GoToEditArticle("TestTitle_01");
+            editArticle.EditTitleAndSubmit("NewTestTitle_01");
+
+            editArticle.AsserterArticleExist("NewTestTitle_01");
+        }
+        [Test]
+        [Author("Kristin Krastev")]
+        public void EditPageContent()
+        {
+            EditPostPage editArticle = new EditPostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(editArticle, "TestEmail_01@test.com", "Testpassword_1");
+            editArticle.GoToEditArticle("TestTitle_01");
+            editArticle.EditContentAndSubmit("New Content for TestTitle_01");
+
+            editArticle.AsserterArticleExist("NewTestTitle_01");
+        }
         [Test]
         public void ChangePassword()
         {
