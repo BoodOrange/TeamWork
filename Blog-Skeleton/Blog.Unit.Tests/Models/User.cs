@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Blog.Unit.Tests.Models
+﻿namespace Blog.Unit.Tests.Models
 {
     public class User
     {
@@ -33,6 +27,14 @@ namespace Blog.Unit.Tests.Models
         public string Password { get; set; }
         public string PasswordNew { get; set; }
         public string PasswordConfirm { get; set; }
+
+        public void SwitchPasswords()
+        {
+            string tmp = this.Password;
+            this.Password = this.PasswordNew;
+            this.PasswordNew = tmp;
+            this.PasswordConfirm = tmp;
+        }
 
 
     }

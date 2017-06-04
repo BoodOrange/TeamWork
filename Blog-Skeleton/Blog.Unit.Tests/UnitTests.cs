@@ -1,12 +1,7 @@
 ﻿using Blog.Unit.Tests.Pages.CreatePostPage;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Blog.Unit.Tests.Models;
 
 
@@ -42,7 +37,15 @@ namespace Blog.Unit.Tests
             email: "TestEmail_01@test.com",
             password: "Testpassword_1",
             newPassword: "Testpassword_2",
-            confirmPassword: "Testpassword_2"
+            confirmPassword: "Testpassword_3"
+        );
+
+        public User WeakUser { get; set; } = new User(
+            fullname: "Full Name",
+            email: "TestEmail_01@test.com",
+            password: "Testpassword_1",
+            newPassword: "1",
+            confirmPassword: "1"
         );
 
 
@@ -167,11 +170,13 @@ namespace Blog.Unit.Tests
         {
 
             ChangePasswordPage page = new ChangePasswordPage(this.Driver);
+            var user = this.ChangeUser;
 
-            BlogTestUtilities.LogInGoTo(page, TestUser);
-            page.FillAndSubmit("Testpassword_1", "Testpassword_2");
+            BlogTestUtilities.LogInGoTo(page, user);
+            page.FillAndSubmitU(user);
+
             page.LogOff();
-            //BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_2");
+            BlogTestUtilities.LogInGoTo(page, user);
 
             var status = this.Driver.Manage().Cookies.GetCookieNamed(".AspNet.ApplicationCookie");
 
@@ -179,9 +184,8 @@ namespace Blog.Unit.Tests
             if (status != null)
             {
                 page.NavigateTo();
-                page.FillAndSubmit("Testpassword_2", "Testpassword_1");
+                page.FillAndSubmitU(user);
             }
-
 
             Assert.NotNull(status);
 
@@ -194,10 +198,16 @@ namespace Blog.Unit.Tests
 
             ChangePasswordPage page = new ChangePasswordPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(page, TestUser);
-            page.FillAndSubmit(TestUser.Password, "1");
+            var user = this.WeakUser;
+
+            // Login with regular user
+            BlogTestUtilities.LogInGoTo(page, user);
+
+            // Change password for user
+            page.FillAndSubmitU(user);
+
             page.LogOff();
-            //BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "1");
+            BlogTestUtilities.LogInGoTo(page, user);
 
             var status = this.Driver.Manage().Cookies.GetCookieNamed(".AspNet.ApplicationCookie");
 
@@ -205,7 +215,7 @@ namespace Blog.Unit.Tests
             if (status != null)
             {
                 page.NavigateTo();
-                page.FillAndSubmit("1", "Testpassword_1");
+                page.FillAndSubmitU(user);
             }
 
             Assert.Null(status);
@@ -218,8 +228,10 @@ namespace Blog.Unit.Tests
 
             ChangePasswordPage page = new ChangePasswordPage(this.Driver);
 
-            //BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_1");
-            page.FillAllAndSubmit("Testpassword_1", "Testpassword_2", "Testpassword_3");
+            var user = this.WrongUser;
+
+            BlogTestUtilities.LogInGoTo(page, user);
+            page.FillAllAndSubmit(user);
             
             Assert.AreEqual("The new password and confirmation password do not match.",page.AlertPasswordsDoNotMatch.Text);
         }

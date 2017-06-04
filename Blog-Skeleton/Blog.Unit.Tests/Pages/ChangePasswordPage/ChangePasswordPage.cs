@@ -1,5 +1,6 @@
 ﻿namespace Blog.Unit.Tests.Pages.ChangePasswordPage
 {
+    using Models;
     using OpenQA.Selenium;
 
     public partial class ChangePasswordPage : BasePage
@@ -16,15 +17,16 @@
             this.Type(this.FieldConfirmPassword, confirmPass);
         }
 
-        public void FillAndSubmit(string oldPass, string newPass)
+        public void FillAndSubmitU(User user)
         {
-            this.Fill(oldPass,newPass, newPass);
+            this.Fill(user.Password, user.PasswordNew, user.PasswordConfirm);
             this.ButtonChangePassword.Click();
+            user.SwitchPasswords();
         }
 
-        public void FillAllAndSubmit(string oldPass, string newPass, string confirmPass)
+        public void FillAllAndSubmit(User user)
         {
-            this.Fill(oldPass, newPass, confirmPass);
+            this.Fill(user.Password, user.PasswordNew, user.PasswordConfirm);
             this.ButtonChangePassword.Click();
         }
     }
