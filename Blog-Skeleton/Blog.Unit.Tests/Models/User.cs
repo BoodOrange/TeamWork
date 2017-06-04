@@ -36,5 +36,12 @@ namespace Blog.Unit.Tests.Models
         public string PasswordConfirm { get; set; }
 
 
+        public void SwitchPasswords()
+        {
+            string tmp = this.Password;
+            this.Password = this.PasswordNew;
+            this.PasswordNew = tmp;
+            this.PasswordConfirm = tmp;
+        }
     }
 }
