@@ -17,17 +17,16 @@ namespace Blog.Unit.Tests.Models
             PasswordConfirm = confirmPassword;
         }
 
-        public User(
-            string fullname, 
-            string email, 
-            string password): this(fullname, email,password,"","") {}
+        public User(string fullname, string email, string password) : this(fullname, email, password, "", "")
+        {
+            
+        }
 
-        public User(
-            string fullname, 
-            string email, 
-            string password, 
-            string newPassword) : this(fullname, email, password, newPassword, "") {}
-
+        public User(string fullname, string email, string password, string newPassword) : this(fullname, email,
+            password, newPassword, "")
+        {
+            
+        }
 
 
         public string FullName { get; set; }

@@ -11,6 +11,9 @@ namespace Blog.Unit.Tests.Pages.RegistrationPage
     {
         public RegistrationPage(IWebDriver driver) : base(driver)
         {
+            this.PageUrl += "/Account/Register";
         }
+
+
     }
 }

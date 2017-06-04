@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blog.Unit.Tests.Models;
+using Blog.Unit.Tests.Pages.RegistrationPage;
 
 
 namespace Blog.Unit.Tests
@@ -198,6 +199,14 @@ namespace Blog.Unit.Tests
             page.FillAllAndSubmit("Testpassword_1", "Testpassword_2", "Testpassword_3");
             
             Assert.AreEqual("The new password and confirmation password do not match.",page.AlertPasswordsDoNotMatch.Text);
+        }
+
+        [Test]
+        [Property("Refistration Page Tests", 1)]
+        [Author("ST")]
+        public void RegistrateWithValidUserAndPass()
+        {
+            RegistrationPage page = new RegistrationPage(this.Driver);
         }
     }
 }
