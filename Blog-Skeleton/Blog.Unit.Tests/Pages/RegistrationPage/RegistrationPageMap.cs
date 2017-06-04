@@ -8,5 +8,6 @@ namespace Blog.Unit.Tests.Pages.RegistrationPage
 {
     public partial class RegistrationPage
     {
+
     }
 }
