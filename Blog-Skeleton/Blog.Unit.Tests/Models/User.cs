@@ -20,15 +20,13 @@ namespace Blog.Unit.Tests.Models
         public User(
             string fullname, 
             string email, 
-            string password): this(fullname, email,password,"","") {}
+            string password): this(fullname, email,password,"", password) {}
 
         public User(
             string fullname, 
             string email, 
             string password, 
             string newPassword) : this(fullname, email, password, newPassword, "") {}
-
-
 
         public string FullName { get; set; }
         public string Email { get; set; }

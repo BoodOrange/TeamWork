@@ -22,7 +22,28 @@ namespace Blog.Unit.Tests
     {
         public IWebDriver Driver;
 
-        public User testUser { get; set; } = new User("TestEmail_01@test.com", "Testpassword_1", "Testpassword_1");
+        public User TestUser { get; set; } = new User(
+            fullname: "Full Name", 
+            email: "TestEmail_01@test.com", 
+            password: "Testpassword_1", 
+            newPassword: "Testpassword_1"
+            );
+
+        public User ChangeUser { get; set; } = new User(
+            fullname: "Full Name", 
+            email: "TestEmail_01@test.com", 
+            password: "Testpassword_1", 
+            newPassword: "Testpassword_2", 
+            confirmPassword: "Testpassword_2"
+            );
+
+        public User WrongUser { get; set; } = new User(
+            fullname: "Full Name",
+            email: "TestEmail_01@test.com",
+            password: "Testpassword_1",
+            newPassword: "Testpassword_2",
+            confirmPassword: "Testpassword_2"
+        );
 
 
         [SetUp]
@@ -50,7 +71,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle,"TestEmail_01@test.com", "Testpassword_1");
+            BlogTestUtilities.LogInGoTo(createArticle, TestUser);
            
             createArticle.AsserterArticlePageLoad("Create Article"); 
          }
@@ -60,7 +81,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            BlogTestUtilities.LogInGoTo(createArticle, TestUser);
             createArticle.FillAndSubmit(String.Empty, "Content for TestTitle_01");
 
             createArticle.AsserterArticleError("The Title field is required.");
@@ -73,7 +94,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            BlogTestUtilities.LogInGoTo(createArticle, TestUser);
             createArticle.FillAndSubmit("TestTitle_01", String.Empty);
 
             createArticle.AsserterArticleError("The Content field is required.");
@@ -85,7 +106,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            BlogTestUtilities.LogInGoTo(createArticle, TestUser);
             createArticle.FillAndCancel("TestTitle_Cancel", "Content for TestTitle_01");
 
             createArticle.AsserterArticleCancel("TestTitle_Cancel");
@@ -97,7 +118,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, "TestEmail_01@test.com", "Testpassword_1");
+            BlogTestUtilities.LogInGoTo(createArticle, TestUser);
             createArticle.FillAndSubmit("TestTitle_01", "Content for TestTitle_01");
 
             createArticle.AsserterArticleExist("TestTitle_01");
@@ -109,7 +130,7 @@ namespace Blog.Unit.Tests
         {
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(editArticle, "TestEmail_01@test.com", "Testpassword_1");
+            BlogTestUtilities.LogInGoTo(editArticle, TestUser);
             editArticle.GoToEditArticle("TestTitle_01");
 
             editArticle.AsserterEditArticlePageLoad("Edit Article");
@@ -122,7 +143,7 @@ namespace Blog.Unit.Tests
         {
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(editArticle, "TestEmail_01@test.com", "Testpassword_1");
+            BlogTestUtilities.LogInGoTo(editArticle, TestUser);
             editArticle.GoToEditArticle("TestTitle_01");
             editArticle.EditTitleAndSubmit("NewTestTitle_01");
 
@@ -134,22 +155,23 @@ namespace Blog.Unit.Tests
         {
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(editArticle, "TestEmail_01@test.com", "Testpassword_1");
+            BlogTestUtilities.LogInGoTo(editArticle, TestUser);
             editArticle.GoToEditArticle("TestTitle_01");
             editArticle.EditContentAndSubmit("New Content for TestTitle_01");
 
             editArticle.AsserterArticleExist("NewTestTitle_01");
         }
         [Test]
+        [Author("Zlatyo Uzunov")]
         public void ChangePassword()
         {
 
             ChangePasswordPage page = new ChangePasswordPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_1");
+            BlogTestUtilities.LogInGoTo(page, TestUser);
             page.FillAndSubmit("Testpassword_1", "Testpassword_2");
             page.LogOff();
-            BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_2");
+            //BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_2");
 
             var status = this.Driver.Manage().Cookies.GetCookieNamed(".AspNet.ApplicationCookie");
 
@@ -166,15 +188,16 @@ namespace Blog.Unit.Tests
         }
 
         [Test]
+        [Author("Zlatyo Uzunov")]
         public void ChangePasswordWeak()
         {
 
             ChangePasswordPage page = new ChangePasswordPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_1");
-            page.FillAndSubmit("Testpassword_1", "1");
+            BlogTestUtilities.LogInGoTo(page, TestUser);
+            page.FillAndSubmit(TestUser.Password, "1");
             page.LogOff();
-            BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "1");
+            //BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "1");
 
             var status = this.Driver.Manage().Cookies.GetCookieNamed(".AspNet.ApplicationCookie");
 
@@ -189,12 +212,13 @@ namespace Blog.Unit.Tests
         }
 
         [Test]
+        [Author("Zlatyo Uzunov")]
         public void ChangePasswordWrong()
         {
 
             ChangePasswordPage page = new ChangePasswordPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_1");
+            //BlogTestUtilities.LogInGoTo(page, "TestEmail_01@test.com", "Testpassword_1");
             page.FillAllAndSubmit("Testpassword_1", "Testpassword_2", "Testpassword_3");
             
             Assert.AreEqual("The new password and confirmation password do not match.",page.AlertPasswordsDoNotMatch.Text);
