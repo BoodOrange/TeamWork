@@ -8,6 +8,7 @@ using Blog.Unit.Tests.Models;
 namespace Blog.Unit.Tests
 {
     using Pages.ChangePasswordPage;
+    using Pages.DeletePostPage;
     using Pages.EditPostPage;
     using Pages.HomePage;
     using Utility;
@@ -78,6 +79,7 @@ namespace Blog.Unit.Tests
            
             createArticle.AsserterArticlePageLoad("Create Article"); 
          }
+
         [Test]
         [Author("Kristin Krastev")]
         public void CreateArticleWithoutTitle()
@@ -164,6 +166,7 @@ namespace Blog.Unit.Tests
 
             editArticle.AsserterArticleExist("NewTestTitle_01");
         }
+
         [Test]
         [Author("Zlatyo Uzunov")]
         public void ChangePassword()
@@ -234,6 +237,17 @@ namespace Blog.Unit.Tests
             page.FillAllAndSubmit(user);
             
             Assert.AreEqual("The new password and confirmation password do not match.",page.AlertPasswordsDoNotMatch.Text);
+        }
+
+        [Test]
+        [Author("Zlatyo Uzunov")]
+        public void DeleteOwnArticle()
+        {
+            var user = this.TestUser;
+
+            DeletePostPage page = new DeletePostPage(this.Driver, user,"NewTestTitle_01");
+
+            
         }
     }
 }
