@@ -177,7 +177,7 @@ namespace Blog.Unit.Tests
             var user = this.ChangeUser;
 
             BlogTestUtilities.LogInGoTo(page, user);
-            page.FillAndSubmitU(user);
+            page.FillAndSubmit(user);
 
             page.LogOff();
             BlogTestUtilities.LogInGoTo(page, user);
@@ -188,7 +188,7 @@ namespace Blog.Unit.Tests
             if (status != null)
             {
                 page.NavigateTo();
-                page.FillAndSubmitU(user);
+                page.FillAndSubmit(user);
             }
 
             Assert.NotNull(status);
@@ -208,7 +208,7 @@ namespace Blog.Unit.Tests
             BlogTestUtilities.LogInGoTo(page, user);
 
             // Change password for user
-            page.FillAndSubmitU(user);
+            page.FillAndSubmit(user);
 
             page.LogOff();
             BlogTestUtilities.LogInGoTo(page, user);
@@ -219,7 +219,7 @@ namespace Blog.Unit.Tests
             if (status != null)
             {
                 page.NavigateTo();
-                page.FillAndSubmitU(user);
+                page.FillAndSubmit(user);
             }
 
             Assert.Null(status);
@@ -254,7 +254,15 @@ namespace Blog.Unit.Tests
         {
             var user = this.TestUser;
 
-            DeletePostPage page = new DeletePostPage(this.Driver, user,"NewTestTitle_01");
+            DeletePostPage page = new DeletePostPage(this.Driver, user, "TestTitle_01");
+
+            page.NavigateTo();
+
+            page.ButtonDelete.Click();
+
+            Assert.IsFalse(
+                BlogTestUtilities.CheckArticleExistsByTitle(page, "TestTitle_01")
+                );
 
             
         }

@@ -17,7 +17,7 @@
             this.Type(this.FieldConfirmPassword, confirmPass);
         }
 
-        public void FillAndSubmitU(User user)
+        public void FillAndSubmit(User user)
         {
             this.Fill(user.Password, user.PasswordNew, user.PasswordConfirm);
             this.ButtonChangePassword.Click();

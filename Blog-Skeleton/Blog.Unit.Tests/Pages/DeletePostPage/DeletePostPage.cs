@@ -12,21 +12,9 @@
 
             BlogTestUtilities.LogInGoTo(this,user);
 
-            this.GoToDeleteArticle(title);
+            PageUrl += "/Delete/";
+            BlogTestUtilities.SetArticleIdByTitle(this,title);
 
-        }
-
-        public void GoToDeleteArticle(string title)
-        {
-            for (int i = 0; i < this.ArticlesByTag.Count; i++)
-            {
-                if (ArticlesByTag[i].Text.Contains(title))
-                {
-                    this.ArticlesByTag[i].Click();
-                    this.ButtonDelete.Click();
-                }
-
-            }
         }
     }
 }
