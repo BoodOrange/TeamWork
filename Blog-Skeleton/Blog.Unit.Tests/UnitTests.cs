@@ -74,7 +74,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, TestUser);
+            BlogTestUtilities.LogInGoTo(createArticle, this.TestUser);
            
             createArticle.AsserterArticlePageLoad("Create Article"); 
          }
@@ -84,7 +84,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, TestUser);
+            BlogTestUtilities.LogInGoTo(createArticle, this.TestUser);
             createArticle.FillAndSubmit(String.Empty, "Content for TestTitle_01");
 
             createArticle.AsserterArticleError("The Title field is required.");
@@ -97,7 +97,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, TestUser);
+            BlogTestUtilities.LogInGoTo(createArticle, this.TestUser);
             createArticle.FillAndSubmit("TestTitle_01", String.Empty);
 
             createArticle.AsserterArticleError("The Content field is required.");
@@ -109,7 +109,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, TestUser);
+            BlogTestUtilities.LogInGoTo(createArticle, this.TestUser);
             createArticle.FillAndCancel("TestTitle_Cancel", "Content for TestTitle_01");
 
             createArticle.AsserterArticleCancel("TestTitle_Cancel");
@@ -121,7 +121,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, TestUser);
+            BlogTestUtilities.LogInGoTo(createArticle, this.TestUser);
             createArticle.FillAndSubmit("TestTitle_01", "Content for TestTitle_01");
 
             createArticle.AsserterArticleExist("TestTitle_01");
@@ -133,7 +133,7 @@ namespace Blog.Unit.Tests
         {
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(editArticle, TestUser);
+            BlogTestUtilities.LogInGoTo(editArticle, this.TestUser);
             editArticle.GoToEditArticle("TestTitle_01");
 
             editArticle.AsserterEditArticlePageLoad("Edit Article");
@@ -146,7 +146,7 @@ namespace Blog.Unit.Tests
         {
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(editArticle, TestUser);
+            BlogTestUtilities.LogInGoTo(editArticle, this.TestUser);
             editArticle.GoToEditArticle("TestTitle_01");
             editArticle.EditTitleAndSubmit("NewTestTitle_01");
 
