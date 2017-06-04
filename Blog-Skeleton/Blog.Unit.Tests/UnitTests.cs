@@ -181,9 +181,22 @@ namespace Blog.Unit.Tests
 
             BlogTestUtilities.LogInGoTo(editArticle, TestUser2);
             editArticle.GoToEditArticle("TestTitle_User1");
-           // editArticle.EditButton.Click();
+          
 
             editArticle.AsserterEditArticleEditWithDifferentUserError("HTTP Error 403.0 - Forbidden");
+
+        }
+        [Test]
+        [Author("Kristin Krastev")]
+        public void EditPageCancel()
+        {
+            EditPostPage editArticle = new EditPostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(editArticle, TestUser);
+            editArticle.GoToEditArticle("TestTitle_User1");
+            editArticle.EditAndCancel("Cancel Title", "Cancel Content");
+
+            editArticle.AsserterEditArticleCancel("Cancel Title");
 
         }
         [Test]

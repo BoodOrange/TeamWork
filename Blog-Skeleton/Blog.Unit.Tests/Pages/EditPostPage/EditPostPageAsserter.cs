@@ -30,5 +30,17 @@ namespace Blog.Unit.Tests.Pages.EditPostPage
         {
             Assert.IsTrue(page.ArticleError.Text.Contains(text));
         }
+
+        public static void AsserterEditArticleCancel(this EditPostPage page, string text)
+        {
+            for (int i = 0; i < page.Articles.Count; i++)
+            {
+                if (!page.Articles[i].Text.Contains(text))
+                {
+                    Assert.IsFalse(page.Articles[i].Text.Contains(text));
+                }
+            }
+
+        }
     }
 }
