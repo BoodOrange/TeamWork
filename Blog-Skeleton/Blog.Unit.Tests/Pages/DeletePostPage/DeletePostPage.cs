@@ -6,27 +6,15 @@
 
     public partial class DeletePostPage : BasePage
     {
-        public DeletePostPage(IWebDriver driver, User user, string title) : base(driver)
+        public DeletePostPage(IWebDriver driver, User user, Article article) : base(driver)
         {
             PageUrl = "/Article";
 
             BlogTestUtilities.LogInGoTo(this,user);
 
-            this.GoToDeleteArticle(title);
+            PageUrl += "/Delete/";
+            BlogTestUtilities.SetArticleIdByTitle(this,article.Title);
 
-        }
-
-        public void GoToDeleteArticle(string title)
-        {
-            for (int i = 0; i < this.ArticlesByTag.Count; i++)
-            {
-                if (ArticlesByTag[i].Text.Contains(title))
-                {
-                    this.ArticlesByTag[i].Click();
-                    this.ButtonDelete.Click();
-                }
-
-            }
         }
     }
 }

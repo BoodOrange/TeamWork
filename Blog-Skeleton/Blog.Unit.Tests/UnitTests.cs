@@ -25,6 +25,12 @@ namespace Blog.Unit.Tests
             password: "Testpassword_1", 
             newPassword: "Testpassword_1"
             );
+        public User TestUser2 { get; set; } = new User(
+            fullname: "Full Name",
+            email: "TestEmail_02@test.com",
+            password: "Testpassword_2",
+            newPassword: "Testpassword_2"
+            );
 
         public User ChangeUser { get; set; } = new User(
             fullname: "Full Name", 
@@ -49,6 +55,11 @@ namespace Blog.Unit.Tests
             newPassword: "1",
             confirmPassword: "1"
         );
+
+        public Article TestArticle { get; set; } = new Article(
+            title: "Lorem ipsum dolor sit",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac pretium velit. Morbi laoreet mauris ac est congue, quis iaculis."
+            );
 
 
         [SetUp]
@@ -170,7 +181,32 @@ namespace Blog.Unit.Tests
 
             editArticle.AsserterArticleExist("NewTestTitle_01");
         }
+        [Test]
+        [Author("Kristin Krastev")]
+        public void EditPageWithDifferentUser()
+        {
+            EditPostPage editArticle = new EditPostPage(this.Driver);
 
+            BlogTestUtilities.LogInGoTo(editArticle, TestUser2);
+            editArticle.GoToEditArticle("TestTitle_User1");
+          
+
+            editArticle.AsserterEditArticleEditWithDifferentUserError("HTTP Error 403.0 - Forbidden");
+
+        }
+        [Test]
+        [Author("Kristin Krastev")]
+        public void EditPageCancel()
+        {
+            EditPostPage editArticle = new EditPostPage(this.Driver);
+
+            BlogTestUtilities.LogInGoTo(editArticle, TestUser);
+            editArticle.GoToEditArticle("TestTitle_User1");
+            editArticle.EditAndCancel("Cancel Title", "Cancel Content");
+
+            editArticle.AsserterEditArticleCancel("Cancel Title");
+
+        }
         [Test]
         [Author("Zlatyo Uzunov")]
         public void ChangePassword()
@@ -180,7 +216,7 @@ namespace Blog.Unit.Tests
             var user = this.ChangeUser;
 
             BlogTestUtilities.LogInGoTo(page, user);
-            page.FillAndSubmitU(user);
+            page.FillAndSubmit(user);
 
             page.LogOff();
             BlogTestUtilities.LogInGoTo(page, user);
@@ -191,12 +227,13 @@ namespace Blog.Unit.Tests
             if (status != null)
             {
                 page.NavigateTo();
-                page.FillAndSubmitU(user);
+                page.FillAndSubmit(user);
             }
 
             Assert.NotNull(status);
 
         }
+        
 
         [Test]
         [Author("Zlatyo Uzunov")]
@@ -211,7 +248,7 @@ namespace Blog.Unit.Tests
             BlogTestUtilities.LogInGoTo(page, user);
 
             // Change password for user
-            page.FillAndSubmitU(user);
+            page.FillAndSubmit(user);
 
             page.LogOff();
             BlogTestUtilities.LogInGoTo(page, user);
@@ -222,7 +259,7 @@ namespace Blog.Unit.Tests
             if (status != null)
             {
                 page.NavigateTo();
-                page.FillAndSubmitU(user);
+                page.FillAndSubmit(user);
             }
 
             Assert.Null(status);
@@ -309,8 +346,17 @@ namespace Blog.Unit.Tests
         public void DeleteOwnArticle()
         {
             var user = this.TestUser;
+            var article = this.TestArticle;
 
-            DeletePostPage page = new DeletePostPage(this.Driver, user,"NewTestTitle_01");
+            BlogTestUtilities.CreateArticle(this.Driver, user, article);
+
+            DeletePostPage page = new DeletePostPage(this.Driver, user, article);
+            page.NavigateTo();
+            page.ButtonDelete.Click();
+
+            Assert.IsFalse(
+                BlogTestUtilities.CheckArticleExistsByTitle(page, article)
+                );
 
             
         }

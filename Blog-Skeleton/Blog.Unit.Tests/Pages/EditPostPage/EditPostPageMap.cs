@@ -30,5 +30,7 @@ namespace Blog.Unit.Tests.Pages.EditPostPage
         public IWebElement EditArticleHeader => this.Driver.FindElement(By.XPath("/html/body/div[2]/div/div/h2"));
 
         public IWebElement EditArticleButton => this.Driver.FindElement(By.XPath("/html/body/div[2]/div/div/form/div[4]/div/input"));
+
+        public IWebElement ArticleError => this.Driver.FindElement(By.Id("content"));
     }
 }
