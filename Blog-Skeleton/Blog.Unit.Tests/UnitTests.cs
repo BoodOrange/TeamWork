@@ -58,7 +58,9 @@ namespace Blog.Unit.Tests
         }
 
         [Test]
+        [Author("ST")]
         public void CheckSiteLoad()
+        
         {
             //Arrange
             HomePage home = new HomePage(this.Driver);
@@ -67,7 +69,8 @@ namespace Blog.Unit.Tests
             home.NavigateTo();
 
             //Assert
-            Assert.AreEqual("SOFTUNI BLOG", home.LinkLogo.Text);
+            home.LogoAsserter("SOFTUNI BLOG");
+            
         }
 
         [Test]
@@ -241,11 +244,64 @@ namespace Blog.Unit.Tests
         }
 
         [Test]
-        [Property("Refistration Page Tests", 1)]
+        [Property("Registration Page Tests", 1)]
         [Author("ST")]
         public void RegistrateWithValidUserAndPass()
         {
             RegistrationPage page = new RegistrationPage(this.Driver);
+            string userMail = "gogo"+DateTime.Now.Ticks+"@gmail.com";
+            User user = new User(this.TestUser.FullName, userMail , this.TestUser.Password);
+
+            page.NavigateTo();
+            page.FillRegForm(user);
+
+            page.AssertIfRegistrationIsOk("Hello " + userMail + "!");
+            
+        }
+
+        [Test]
+        [Property("Registration Page Tests", 1)]
+        [Author("ST")]
+        public void RegistrateWithInvalidUserMail()
+        {
+            RegistrationPage page = new RegistrationPage(this.Driver);
+            User user = new User("Test User", "Gogo@gmail", "123456");
+
+            page.NavigateTo();
+            page.FillRegForm(user);
+
+            page.AssertIfRegistrationWithWrongMail("The Email field is not a valid e-mail address.");
+
+        }
+
+        [Test]
+        [Property("Registration Page Tests", 1)]
+        [Author("ST")]
+        public void RegistrateWithoutFullName()
+        {
+            RegistrationPage page = new RegistrationPage(this.Driver);
+            User user = new User("", "Gogo" + DateTime.Now.Ticks + "@gmail.com", "123456");
+
+            page.NavigateTo();
+            page.FillRegForm(user);
+
+            page.AssertRegistrationWithoutFullName("The Full Name field is required.");
+
+        }
+
+        [Test]
+        [Property("Registration Page Tests", 1)]
+        [Author("ST")]
+        public void RegistrateWithoutPassword()
+        {
+            RegistrationPage page = new RegistrationPage(this.Driver);
+            User user = new User(TestUser.FullName, "Gogo" + DateTime.Now.Ticks + "@gmail.com", "");
+
+            page.NavigateTo();
+            page.FillRegForm(user);
+
+            page.AssertRegistrationWithoutPass("The Password field is required.");
+
         }
 
         [Test]

@@ -9,9 +9,9 @@ namespace Blog.Unit.Tests.Pages.HomePage
 {
     public static class HomePageAsserter
     {
-        public static void Name(this HomePage page, string text)
+        public static void LogoAsserter(this HomePage page, string text)
         {
-            Assert.IsTrue(true);
+            Assert.AreEqual(text, page.LinkLogo.Text);
         }
     }
 }

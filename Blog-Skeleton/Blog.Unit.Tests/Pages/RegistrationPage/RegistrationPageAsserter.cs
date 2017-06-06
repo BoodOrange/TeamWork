@@ -9,9 +9,28 @@ namespace Blog.Unit.Tests.Pages.RegistrationPage
 {
     public static class RegistrationPageAsserter
     {
-        public static void Name(this RegistrationPage page, string text)
+        public static void AssertIfRegistrationIsOk(this RegistrationPage page, string text)
         {
-            Assert.IsTrue(true);
+            Assert.AreEqual(text, page.RegisteredUserElement.Text);
+
+        }
+
+        public static void AssertIfRegistrationWithWrongMail(this RegistrationPage page, string text)
+        {
+            Assert.AreEqual(text, page.WrongUserMaliField.Text);
+
+        }
+
+        public static void AssertRegistrationWithoutFullName(this RegistrationPage page, string text)
+        {
+            Assert.AreEqual(text, page.WrongUserMaliField.Text);
+
+        }
+
+        public static void AssertRegistrationWithoutPass(this RegistrationPage page, string text)
+        {
+            Assert.AreEqual(text, page.WrongUserMaliField.Text);
+
         }
     }
 }

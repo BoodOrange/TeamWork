@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Blog.Unit.Tests.Models;
 using OpenQA.Selenium;
 
 namespace Blog.Unit.Tests.Pages.RegistrationPage
@@ -14,6 +16,21 @@ namespace Blog.Unit.Tests.Pages.RegistrationPage
             this.PageUrl += "/Account/Register";
         }
 
+        //public void NavigateToSite()
+        //{
+        //    this.Driver.Navigate().GoToUrl(this.PageUrl);
+        //    this.Driver.Manage().Window.Maximize();
+        //}
+
+
+        public void FillRegForm(User user)
+        {
+            this.Type(this.Email, user.Email);
+            this.Type(this.FullName, user.FullName);
+            this.Type(this.Password, user.Password);
+            this.Type(this.ConfirmPassword, user.Password);
+            this.RegisterButtonInForm.Click();
+        }
 
     }
 }

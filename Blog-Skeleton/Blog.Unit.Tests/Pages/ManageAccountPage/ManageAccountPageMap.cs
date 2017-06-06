@@ -10,9 +10,9 @@ namespace Blog.Unit.Tests.Pages.ManageAccountPage
 
     public partial class ManageAccountPage
     {
-        public IWebElement LinkChangePassword => Driver
-            .FindElement(
-                By.LinkText("Change your password")
-            );
+
+        public IWebElement LinkChangePassword => Driver.FindElement(By.LinkText("Change your password"));
+
+
     }
 }
