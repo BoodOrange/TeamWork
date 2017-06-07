@@ -16,12 +16,7 @@ namespace Blog.Unit.Tests.Pages.RegistrationPage
             this.PageUrl += "/Account/Register";
         }
 
-        //public void NavigateToSite()
-        //{
-        //    this.Driver.Navigate().GoToUrl(this.PageUrl);
-        //    this.Driver.Manage().Window.Maximize();
-        //}
-
+        
 
         public void FillRegForm(User user)
         {
