@@ -31,6 +31,12 @@ namespace Blog.Unit.Tests
             password: "Testpassword_2",
             newPassword: "Testpassword_2"
             );
+        public User TestUser3 { get; set; } = new User(
+            fullname: "Full Name",
+            email: "TestEmail_03@test.com",
+            password: "Testpassword_3",
+            newPassword: "Testpassword_3"
+            );
 
         public User ChangeUser { get; set; } = new User(
             fullname: "Full Name", 
@@ -151,11 +157,10 @@ namespace Blog.Unit.Tests
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
             BlogTestUtilities.LogInGoTo(editArticle, this.TestUser);
-            editArticle.GoToEditArticle("TestTitle_01");
+            BlogTestUtilities.CreateArticleToEdit(this.Driver, "TestTitle_03", "Content for TestTitle_03");
+            editArticle.GoToEditArticle("TestTitle_03");
 
             editArticle.AsserterEditArticlePageLoad("Edit Article");
-            //editArticle.EditContentAndSubmit("New Content for TestTitle_01");
-
         }
         [Test]
         [Author("Kristin Krastev")]
@@ -164,10 +169,11 @@ namespace Blog.Unit.Tests
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
             BlogTestUtilities.LogInGoTo(editArticle, this.TestUser);
-            editArticle.GoToEditArticle("TestTitle_01");
-            editArticle.EditTitleAndSubmit("NewTestTitle_01");
+            BlogTestUtilities.CreateArticleToEdit(this.Driver, "TestTitle_04", "Content for TestTItele_04");
+            editArticle.GoToEditArticle("TestTitle_04");
+            editArticle.EditTitleAndSubmit("NewTestTitle_04");
 
-            editArticle.AsserterArticleExist("NewTestTitle_01");
+            editArticle.AsserterArticleExist("NewTestTitle_04");
         }
         [Test]
         [Author("Kristin Krastev")]
@@ -176,10 +182,11 @@ namespace Blog.Unit.Tests
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
             BlogTestUtilities.LogInGoTo(editArticle, TestUser);
-            editArticle.GoToEditArticle("TestTitle_01");
-            editArticle.EditContentAndSubmit("New Content for TestTitle_01");
+            BlogTestUtilities.CreateArticleToEdit(this.Driver, "TestTitle_05", "Content for TestTItele_05");
+            editArticle.GoToEditArticle("TestTitle_05");
+            editArticle.EditContentAndSubmit("New Content for TestTitle_05");
 
-            editArticle.AsserterArticleExist("NewTestTitle_01");
+            editArticle.AsserterArticleExist("NewTestTitle_05");
         }
         [Test]
         [Author("Kristin Krastev")]
@@ -187,7 +194,10 @@ namespace Blog.Unit.Tests
         {
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(editArticle, TestUser2);
+            BlogTestUtilities.LogInGoTo(editArticle, TestUser);
+            BlogTestUtilities.CreateArticleToEdit(this.Driver, "TestTitle_User1", "Content for TestTitle_User1");
+            editArticle.LinkLogOff.Click();
+            BlogTestUtilities.LogInGoTo(editArticle, TestUser3);
             editArticle.GoToEditArticle("TestTitle_User1");
           
 
@@ -201,7 +211,8 @@ namespace Blog.Unit.Tests
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
             BlogTestUtilities.LogInGoTo(editArticle, TestUser);
-            editArticle.GoToEditArticle("TestTitle_User1");
+            BlogTestUtilities.CreateArticleToEdit(this.Driver, "TestTitle_06", "Content for TestTItele_06");
+            editArticle.GoToEditArticle("TestTitle_06");
             editArticle.EditAndCancel("Cancel Title", "Cancel Content");
 
             editArticle.AsserterEditArticleCancel("Cancel Title");

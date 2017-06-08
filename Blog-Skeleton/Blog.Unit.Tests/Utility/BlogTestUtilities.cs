@@ -43,5 +43,13 @@
             LogInGoTo(createPage, user);
             createPage.FillAndSubmit(article.Title,article.Content);
         }
+        public static void CreateArticleToEdit(IWebDriver driver, string title, string content)
+        {
+            var createPage = new CreatePostPage(driver);
+
+            //*[@id="logoutForm"]/ul/li[1]/a
+            createPage.CreateButtonFromHome.Click();
+            createPage.FillAndSubmit(title, content);
+        }
     }
 }

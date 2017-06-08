@@ -49,5 +49,10 @@ namespace Blog.Unit.Tests.Pages.EditPostPage
 
             }
         }
+        public void CreateArticleToEdit (string title, string content)
+        {
+      
+                
+        }
     }
 }

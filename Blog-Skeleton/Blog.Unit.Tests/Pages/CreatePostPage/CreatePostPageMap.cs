@@ -35,5 +35,9 @@ namespace Blog.Unit.Tests.Pages.CreatePostPage
             .FindElement(
                 By.XPath("/html/body/div[2]/div/div/form/div[1]/ul/li")
             );
+        public IWebElement CreateButtonFromHome => this.Driver
+            .FindElement(
+                By.XPath("//*[@id=\"logoutForm\"]/ul/li[1]/a")
+            );
     }
 }
