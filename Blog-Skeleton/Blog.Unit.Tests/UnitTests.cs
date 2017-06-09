@@ -222,58 +222,37 @@ namespace Blog.Unit.Tests
         [Author("Zlatyo Uzunov")]
         public void ChangePassword()
         {
+            //Arrange
+            ChangePasswordPage page = new ChangePasswordPage(Driver);
+            var user = ChangeUser;
 
-            ChangePasswordPage page = new ChangePasswordPage(this.Driver);
-            var user = this.ChangeUser;
-
+            //Act
             BlogTestUtilities.LogInGoTo(page, user);
             page.FillAndSubmit(user);
-
             page.LogOff();
-            BlogTestUtilities.LogInGoTo(page, user);
 
-            var status = this.Driver.Manage().Cookies.GetCookieNamed(".AspNet.ApplicationCookie");
-
-            // if changed set the password again (not breaking other tests)
-            if (status != null)
-            {
-                page.NavigateTo();
-                page.FillAndSubmit(user);
-            }
-
-            Assert.NotNull(status);
-
+            //Assert
+            page.AssertLoggedIn(user);
         }
-        
+
+
+
 
         [Test]
         [Author("Zlatyo Uzunov")]
         public void ChangePasswordWeak()
         {
+            //Arrange
+            ChangePasswordPage page = new ChangePasswordPage(Driver);
+            var user = WeakUser;
 
-            ChangePasswordPage page = new ChangePasswordPage(this.Driver);
-
-            var user = this.WeakUser;
-
-            // Login with regular user
+            //Act
             BlogTestUtilities.LogInGoTo(page, user);
-
-            // Change password for user
             page.FillAndSubmit(user);
-
             page.LogOff();
-            BlogTestUtilities.LogInGoTo(page, user);
 
-            var status = this.Driver.Manage().Cookies.GetCookieNamed(".AspNet.ApplicationCookie");
-
-            //if changed set the password again (not breaking other tests)
-            if (status != null)
-            {
-                page.NavigateTo();
-                page.FillAndSubmit(user);
-            }
-
-            Assert.Null(status);
+            //Assert
+            page.AssertNotLoggedIn(user);
         }
 
         [Test]
@@ -281,14 +260,16 @@ namespace Blog.Unit.Tests
         public void ChangePasswordWrong()
         {
 
+            //Arrange
             ChangePasswordPage page = new ChangePasswordPage(this.Driver);
-
             var user = this.WrongUser;
 
+            //Act
             BlogTestUtilities.LogInGoTo(page, user);
             page.FillAllAndSubmit(user);
             
-            Assert.AreEqual("The new password and confirmation password do not match.",page.AlertPasswordsDoNotMatch.Text);
+            //Assert
+            page.AssertNotMatchMessage();
         }
 
         [Test]
@@ -356,18 +337,18 @@ namespace Blog.Unit.Tests
         [Author("Zlatyo Uzunov")]
         public void DeleteOwnArticle()
         {
+            //Arrange
             var user = this.TestUser;
             var article = this.TestArticle;
-
             BlogTestUtilities.CreateArticle(this.Driver, user, article);
-
             DeletePostPage page = new DeletePostPage(this.Driver, user, article);
+
+            //Act
             page.NavigateTo();
             page.ButtonDelete.Click();
 
-            Assert.IsFalse(
-                BlogTestUtilities.CheckArticleExistsByTitle(page, article)
-                );
+            //Assert
+            page.AssertArticleNotExists(article);
 
             
         }
