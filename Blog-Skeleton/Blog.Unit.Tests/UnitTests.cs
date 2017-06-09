@@ -1,71 +1,22 @@
-﻿using Blog.Unit.Tests.Pages.CreatePostPage;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using System;
-using Blog.Unit.Tests.Models;
-using Blog.Unit.Tests.Pages.RegistrationPage;
-
-
-namespace Blog.Unit.Tests
+﻿namespace Blog.Unit.Tests
 {
     using Pages.ChangePasswordPage;
     using Pages.DeletePostPage;
     using Pages.EditPostPage;
     using Pages.HomePage;
     using Utility;
+    using Pages.CreatePostPage;
+    using NUnit.Framework;
+    using OpenQA.Selenium;
+    using System;
+    using Models;
+    using Pages.RegistrationPage;
 
     [TestFixture]
     public class UnitTests
     {
         public IWebDriver Driver;
-
-        public User TestUser { get; set; } = new User(
-            fullname: "Full Name", 
-            email: "TestEmail_01@test.com", 
-            password: "Testpassword_1", 
-            newPassword: "Testpassword_1"
-            );
-        public User TestUser2 { get; set; } = new User(
-            fullname: "Full Name",
-            email: "TestEmail_02@test.com",
-            password: "Testpassword_2",
-            newPassword: "Testpassword_2"
-            );
-        public User TestUser3 { get; set; } = new User(
-            fullname: "Full Name",
-            email: "TestEmail_03@test.com",
-            password: "Testpassword_3",
-            newPassword: "Testpassword_3"
-            );
-
-        public User ChangeUser { get; set; } = new User(
-            fullname: "Full Name", 
-            email: "TestEmail_01@test.com", 
-            password: "Testpassword_1", 
-            newPassword: "Testpassword_2", 
-            confirmPassword: "Testpassword_2"
-            );
-
-        public User WrongUser { get; set; } = new User(
-            fullname: "Full Name",
-            email: "TestEmail_01@test.com",
-            password: "Testpassword_1",
-            newPassword: "Testpassword_2",
-            confirmPassword: "Testpassword_3"
-        );
-
-        public User WeakUser { get; set; } = new User(
-            fullname: "Full Name",
-            email: "TestEmail_01@test.com",
-            password: "Testpassword_1",
-            newPassword: "1",
-            confirmPassword: "1"
-        );
-
-        public Article TestArticle { get; set; } = new Article(
-            title: "Lorem ipsum dolor sit",
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac pretium velit. Morbi laoreet mauris ac est congue, quis iaculis."
-            );
+        private readonly DataInput _dataInput = new DataInput();
 
 
         [SetUp]
@@ -96,7 +47,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, this.TestUser);
+            BlogTestUtilities.LogInGoTo(createArticle, _dataInput.TestUser);
            
             createArticle.AsserterArticlePageLoad("Create Article"); 
          }
@@ -107,7 +58,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, this.TestUser);
+            BlogTestUtilities.LogInGoTo(createArticle, _dataInput.TestUser);
             createArticle.FillAndSubmit(String.Empty, "Content for TestTitle_01");
 
             createArticle.AsserterArticleError("The Title field is required.");
@@ -120,7 +71,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, this.TestUser);
+            BlogTestUtilities.LogInGoTo(createArticle, _dataInput.TestUser);
             createArticle.FillAndSubmit("TestTitle_01", String.Empty);
 
             createArticle.AsserterArticleError("The Content field is required.");
@@ -132,7 +83,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, this.TestUser);
+            BlogTestUtilities.LogInGoTo(createArticle, _dataInput.TestUser);
             createArticle.FillAndCancel("TestTitle_Cancel", "Content for TestTitle_01");
 
             createArticle.AsserterArticleCancel("TestTitle_Cancel");
@@ -144,7 +95,7 @@ namespace Blog.Unit.Tests
         {
             CreatePostPage createArticle = new CreatePostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(createArticle, this.TestUser);
+            BlogTestUtilities.LogInGoTo(createArticle, _dataInput.TestUser);
             createArticle.FillAndSubmit("TestTitle_01", "Content for TestTitle_01");
 
             createArticle.AsserterArticleExist("TestTitle_01");
@@ -156,7 +107,7 @@ namespace Blog.Unit.Tests
         {
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(editArticle, this.TestUser);
+            BlogTestUtilities.LogInGoTo(editArticle, _dataInput.TestUser);
             BlogTestUtilities.CreateArticleToEdit(this.Driver, "TestTitle_03", "Content for TestTitle_03");
             editArticle.GoToEditArticle("TestTitle_03");
 
@@ -168,7 +119,7 @@ namespace Blog.Unit.Tests
         {
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(editArticle, this.TestUser);
+            BlogTestUtilities.LogInGoTo(editArticle, _dataInput.TestUser);
             BlogTestUtilities.CreateArticleToEdit(this.Driver, "TestTitle_04", "Content for TestTItele_04");
             editArticle.GoToEditArticle("TestTitle_04");
             editArticle.EditTitleAndSubmit("NewTestTitle_04");
@@ -181,7 +132,7 @@ namespace Blog.Unit.Tests
         {
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(editArticle, TestUser);
+            BlogTestUtilities.LogInGoTo(editArticle, _dataInput.TestUser);
             BlogTestUtilities.CreateArticleToEdit(this.Driver, "TestTitle_05", "Content for TestTItele_05");
             editArticle.GoToEditArticle("TestTitle_05");
             editArticle.EditContentAndSubmit("New Content for TestTitle_05");
@@ -194,10 +145,10 @@ namespace Blog.Unit.Tests
         {
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(editArticle, TestUser);
+            BlogTestUtilities.LogInGoTo(editArticle, _dataInput.TestUser);
             BlogTestUtilities.CreateArticleToEdit(this.Driver, "TestTitle_User1", "Content for TestTitle_User1");
             editArticle.LinkLogOff.Click();
-            BlogTestUtilities.LogInGoTo(editArticle, TestUser3);
+            BlogTestUtilities.LogInGoTo(editArticle, _dataInput.TestUser3);
             editArticle.GoToEditArticle("TestTitle_User1");
           
 
@@ -210,7 +161,7 @@ namespace Blog.Unit.Tests
         {
             EditPostPage editArticle = new EditPostPage(this.Driver);
 
-            BlogTestUtilities.LogInGoTo(editArticle, TestUser);
+            BlogTestUtilities.LogInGoTo(editArticle, _dataInput.TestUser);
             BlogTestUtilities.CreateArticleToEdit(this.Driver, "TestTitle_06", "Content for TestTItele_06");
             editArticle.GoToEditArticle("TestTitle_06");
             editArticle.EditAndCancel("Cancel Title", "Cancel Content");
@@ -224,7 +175,7 @@ namespace Blog.Unit.Tests
         {
             //Arrange
             ChangePasswordPage page = new ChangePasswordPage(Driver);
-            var user = ChangeUser;
+            var user = _dataInput.ChangeUser;
 
             //Act
             BlogTestUtilities.LogInGoTo(page, user);
@@ -244,7 +195,7 @@ namespace Blog.Unit.Tests
         {
             //Arrange
             ChangePasswordPage page = new ChangePasswordPage(Driver);
-            var user = WeakUser;
+            var user = _dataInput.WeakUser;
 
             //Act
             BlogTestUtilities.LogInGoTo(page, user);
@@ -262,7 +213,7 @@ namespace Blog.Unit.Tests
 
             //Arrange
             ChangePasswordPage page = new ChangePasswordPage(this.Driver);
-            var user = this.WrongUser;
+            var user = _dataInput.WrongUser;
 
             //Act
             BlogTestUtilities.LogInGoTo(page, user);
@@ -279,7 +230,7 @@ namespace Blog.Unit.Tests
         {
             RegistrationPage page = new RegistrationPage(this.Driver);
             string userMail = "gogo"+DateTime.Now.Ticks+"@gmail.com";
-            User user = new User(this.TestUser.FullName, userMail , this.TestUser.Password);
+            User user = new User(_dataInput.TestUser.FullName, userMail , _dataInput.TestUser.Password);
 
             page.NavigateTo();
             page.FillRegForm(user);
@@ -324,7 +275,7 @@ namespace Blog.Unit.Tests
         public void RegistrateWithoutPassword()
         {
             RegistrationPage page = new RegistrationPage(this.Driver);
-            User user = new User(TestUser.FullName, "Gogo" + DateTime.Now.Ticks + "@gmail.com", "");
+            User user = new User(_dataInput.TestUser.FullName, "Gogo" + DateTime.Now.Ticks + "@gmail.com", "");
 
             page.NavigateTo();
             page.FillRegForm(user);
@@ -338,8 +289,8 @@ namespace Blog.Unit.Tests
         public void DeleteOwnArticle()
         {
             //Arrange
-            var user = this.TestUser;
-            var article = this.TestArticle;
+            var user = _dataInput.TestUser;
+            var article = _dataInput.TestArticle;
             BlogTestUtilities.CreateArticle(this.Driver, user, article);
             DeletePostPage page = new DeletePostPage(this.Driver, user, article);
 
