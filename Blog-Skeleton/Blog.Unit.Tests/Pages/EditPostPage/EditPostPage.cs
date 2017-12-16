@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
-
-namespace Blog.Unit.Tests.Pages.EditPostPage
+﻿namespace Blog.Unit.Tests.Pages.EditPostPage
 {
+    using OpenQA.Selenium;
+
     public partial class EditPostPage : BasePage
     {
         public EditPostPage(IWebDriver driver) : base(driver)
         {
             this.PageUrl += "/Article"; // The URL is such in order to work with the BlogTestUtilites Method "LogInGoTo()"
         }
+
         public void EditTitleAndSubmit(string title)
         {
             this.Type(this.EditFieldTitle, title);
@@ -48,6 +44,11 @@ namespace Blog.Unit.Tests.Pages.EditPostPage
                 }
 
             }
+        }
+        public void CreateArticleToEdit (string title, string content)
+        {
+      
+                
         }
     }
 }

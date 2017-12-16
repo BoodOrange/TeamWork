@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
-
-namespace Blog.Unit.Tests.Pages.DeletePostPage
+﻿namespace Blog.Unit.Tests.Pages.DeletePostPage
 {
+    using Models;
+    using NUnit.Framework;
+    using Utility;
+
     public static class DeletePostPageAsserter
     {
-        public static void Name(this DeletePostPage page, string text)
+        public static void AssertArticleNotExists(this DeletePostPage page, Article article)
         {
-            Assert.IsTrue(true);
+            Assert.IsFalse(
+                BlogTestUtilities.CheckArticleExistsByTitle(page, article)
+            );
         }
     }
 }

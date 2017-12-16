@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrowserHost.cs" />
+    <Compile Include="Models\DataInput.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Pages\BasePage.cs" />
